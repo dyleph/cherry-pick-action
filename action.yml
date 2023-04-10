@@ -1,0 +1,61 @@
+name: "GitHub cherry pick action"
+description: "GitHub action for cherry pick commits from Pull Requests into Release branchs"
+inputs:
+  token:
+    description: "GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT)"
+    default: ${{ github.token }}
+    required: false
+  committer:
+    description: >
+      The committer name and email address in the format `Display Name <email@address.com>`.
+      Defaults to the GitHub Actions bot user.
+    default: "GitHub <noreply@github.com>"
+    required: false
+  author:
+    description: >
+      The author name and email address in the format `Display Name <email@address.com>`.
+      Defaults to the user who triggered the workflow run.
+    default: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
+    required: false
+  branch:
+    description: "Name of the branch to merge the cherry pick"
+    required: true
+  title:
+    description: >
+      Override the default generated PR title, the special string `{old_title}` will be substituted for
+      the title of the pull request which triggered the action.
+    required: false
+  body:
+    description: >
+      Override the default generated PR body, the special string `{old_pull_request_id}` will be substituted
+      for the ID of the pull request which triggered the action
+    required: false
+  labels:
+    description: "A comma or newline separated list of labels."
+    required: false
+  inherit_labels:
+    description: "Set to false if you want to inherit labels from parent PR"
+    required: false
+    default: "true"
+  assignees:
+    description: "A comma or newline separated list of assignees (GitHub usernames)."
+    required: false
+  reviewers:
+    description: "A comma or newline separated list of reviewers (GitHub usernames) to request a review from."
+    required: false
+  team-reviewers:
+    description: >
+      A comma or newline separated list of GitHub teams to request a review from.
+      Note that a `repo` scoped Personal Access Token (PAT) may be required.
+    required: false
+  cherry-pick-branch:
+    description: "Name of the new cherry pick branch."
+  force:
+    description: "Forcefully push the branch to remote branch"
+    required: false
+runs:
+  using: node16
+  main: dist/index.js
+branding:
+  icon: 'git-pull-request'
+  color: 'orange'
