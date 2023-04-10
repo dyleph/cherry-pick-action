@@ -9371,7 +9371,7 @@ function run() {
             core.startGroup('Cherry picking');
             const result = yield gitExecution([
                 'cherry-pick',
-                '-x',
+                '-m',
                 '1',
                 '--strategy=recursive',
                 '--strategy-option=ours',
