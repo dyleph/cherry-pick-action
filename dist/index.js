@@ -9343,7 +9343,7 @@ function run() {
             core.info(`Cherry pick into branch ${inputs.branch}!`);
             const githubSha = process.env.GITHUB_SHA;
             const prBranch = inputs.cherryPickBranch
-                ? inputs.cherryPickBranch
+                ? `${inputs.cherryPickBranch}-${githubSha}`
                 : `cherry-pick-${inputs.branch}-${githubSha}`;
             // Configure the committer and author
             core.startGroup('Configuring the committer and author');
@@ -9367,6 +9367,15 @@ function run() {
             core.startGroup(`Create new branch ${prBranch} from ${inputs.branch}`);
             yield gitExecution(['checkout', '-b', prBranch, `origin/${inputs.branch}`]);
             core.endGroup();
+            // Push new branch
+            core.startGroup('Prepare new branch on remote');
+            if (inputs.force) {
+                yield gitExecution(['push', '-u', 'origin', `${prBranch}`, '--force']);
+            }
+            else {
+                yield gitExecution(['push', '-u', 'origin', `${prBranch}`]);
+            }
+            core.endGroup();
             // Cherry pick
             core.startGroup('Cherry picking');
             const result = yield gitExecution([
@@ -9382,7 +9391,7 @@ function run() {
             }
             core.endGroup();
             // Push new branch
-            core.startGroup('Push new branch to remote');
+            core.startGroup('Push change(s) to remote');
             if (inputs.force) {
                 yield gitExecution(['push', '-u', 'origin', `${prBranch}`, '--force']);
             }
