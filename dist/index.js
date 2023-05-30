@@ -9393,7 +9393,7 @@ function run() {
             } finally {
                 // Try to restore gradle.properties
                 core.startGroup('Restore gradle.properties file');
-                yield gitExecution(['restore', '--staged gradle.properties']);
+                yield gitExecution(['checkout', 'HEAD', '-- gradle.properties']);
                 yield gitExecution(['add', '.']);
                 yield gitExecution(['commit', '-m', "Anything"]);
                 core.endGroup();
