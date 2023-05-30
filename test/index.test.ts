@@ -89,7 +89,7 @@ describe('run main', () => {
     expect(core.endGroup).toBeCalledTimes(7)
 
     // TODO check params
-    expect(exec.exec).toBeCalledTimes(10
+    expect(exec.exec).toBeCalledTimes(10)
 
     // TODO check params
     expect(createPullRequest).toBeCalledTimes(1)
