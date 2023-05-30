@@ -87,7 +87,7 @@ export async function run(): Promise<void> {
     } finally {
         // Try to restore gradle.properties
         core.startGroup('Restore gradle.properties file')
-        await gitExecution(['checkout', 'HEAD', '-- gradle.properties']);
+        await gitExecution(['checkout', 'HEAD', 'gradle.properties']);
         await gitExecution(['add', '.']);
         await gitExecution(['commit', '-m', "Anything"]);
         core.endGroup()
