@@ -86,11 +86,11 @@ export async function run(): Promise<void> {
       inputs.body += '\nOups, cherry-pick failed due to a conflict. Please checkout this branch and try to resolve it by manually.';
     } finally {
         // Try to restore gradle.properties
-        core.startGroup('Restore gradle.properties file');
+        core.startGroup('Restore gradle.properties file')
         await gitExecution(['checkout', 'HEAD', '-- gradle.properties']);
         await gitExecution(['add', '.']);
         await gitExecution(['commit', '-m', "Anything"]);
-        core.endGroup();
+        core.endGroup()
         // Push new branch
         core.startGroup('Push new branch to remote')
         if (inputs.force) {
